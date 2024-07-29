@@ -6,6 +6,8 @@
 
 The TNP Portal is a web application designed to manage and display information related to students, companies, schedules, and more. The application features a responsive layout with a sidebar and header, allowing users to navigate through different components and pages seamlessly. 
 
+https://drive.google.com/drive/folders/1iCwGBl8G5Wdto4ylYmUnbKcKJszSdusr?usp=sharing
+
 ## Tech Stack
 
 - **Frontend**: 
