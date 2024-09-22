@@ -2,6 +2,13 @@ import mongoose from 'mongoose';
 
 const studentSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: {
+    type: String,
+    default: 'student',  // Default role for admins/coordinators
+  },
+  // New personal details
   bloodGroup: { type: String },
   class10Percentage: { type: Number },
   class12Percentage: { type: Number },
@@ -11,9 +18,9 @@ const studentSchema = new mongoose.Schema({
   degree: { type: String },
   graduationGPA: { type: Number },
   category: { type: String },
-  collegeEmail: { type: String, required: true },
+  collegeEmail: { type: String },
   personalEmail: { type: String },
-  rollNumber: { type: String, required: true },
+  rollNumber: { type: String },
   branch: { type: String },
   contactNumber: { type: String },
   alternateContactNumber: { type: String },
@@ -21,7 +28,8 @@ const studentSchema = new mongoose.Schema({
   permanentAddress: { type: String },
   aadhaar: { type: String },
   panCard: { type: String },
-  resume: { type: String },
+  resume: { type: String }, // Store resume file name or URL
+  // Academic details
   semester1GPA: { type: Number },
   semester2GPA: { type: Number },
   semester3GPA: { type: Number },
@@ -34,8 +42,9 @@ const studentSchema = new mongoose.Schema({
   cgpaBeforeDrop: { type: Number },
   graduationCGPA: { type: Number },
   backlogs: { type: Number },
-  bans: { type: Number },
-}, { timestamps: true });
+  bans: { type: Number }
+}, { timestamps: true }); // This will automatically add createdAt and updatedAt fields
 
 const Student = mongoose.model('Student', studentSchema);
+
 export default Student;
