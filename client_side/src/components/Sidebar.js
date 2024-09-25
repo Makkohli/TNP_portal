@@ -1,22 +1,34 @@
-import React, { useEffect } from 'react';
-import { Home, Users, Briefcase, Calendar, User, MessageCircle } from 'lucide-react'; // Import MessageCircle icon
+import React, { useEffect, useState } from 'react';
+import { Home, Users, Briefcase, Calendar } from 'lucide-react';
 import { useLocation, Link } from 'react-router-dom';
-import '@fontsource/montserrat'; // Ensure you have installed @fontsource/montserrat
+import '@fontsource/montserrat';
 
 const Sidebar = () => {
-  const MenuList = [
+  const [role, setRole] = useState(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    // Fetch the role from localStorage
+    const userRole = localStorage.getItem('role');
+    setRole(userRole);
+  }, []);
+
+  const adminMenu = [
+
     { name: 'Dashboard', icon: Home, path: '/dashboard' },
-    { name: 'Students', icon: Users, path: '/dashboard/students' },
-    { name: 'Companies', icon: Briefcase, path: '/dashboard/companies' },
     { name: 'Schedule', icon: Calendar, path: '/dashboard/schedule' },
-    { name: 'Profile', icon: User, path: '/profile' }, // Updated Profile menu item
-    { name: 'Query', icon: MessageCircle, path: '/dashboard/query' } // Added Query menu item
+    
   ];
 
-  const location = useLocation();
-  useEffect(() => {
-    console.log(location.pathname);
-  }, [location.pathname]);
+  const studentMenu = [
+    { name: 'Dashboard', icon: Home, path: '/dashboard/students' },
+    { name: 'Profile', icon: Users, path: '/profile' },
+    { name: 'Query', icon: Calendar, path: '/dashboard/query' },
+    { name: 'Companies', icon: Briefcase, path: '/dashboard/companies' },
+  ];
+
+  const MenuList = role === 'admin' ? adminMenu : studentMenu;
+
 
   return (
     <div className="fixed top-0 left-0 h-screen w-80 p-5 bg-[#373737] font-montserrat text-white">

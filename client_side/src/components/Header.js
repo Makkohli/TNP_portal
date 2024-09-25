@@ -2,7 +2,7 @@
 import { Search, Bell } from 'lucide-react';
 import React from 'react';
 
-function Header() {
+function Header({ onLogout }) {
   return (
     <div className='p-5 flex justify-between items-center'>
       <div className='flex items-center gap-4 flex-grow'>
@@ -21,7 +21,12 @@ function Header() {
         </div>
       </div>
       <div className='flex gap-5 items-center'>
-        {/* <UserButton /> */}
+        <button 
+          onClick={onLogout} 
+          className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-4' // Added margin-left
+        >
+          Logout
+        </button>
       </div>
     </div>
   );

@@ -54,7 +54,13 @@ router.post("/login", async (req, res) => {
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
     const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: '1h' });
-    res.json({ message: `${role.charAt(0).toUpperCase() + role.slice(1)} logged in successfully`, token});
+    res.json({
+      message: `${role.charAt(0).toUpperCase() + role.slice(1)} logged in successfully`,
+      token,
+      role, // Include the role in the response
+     _id: user._id,
+  });
+  
   } catch (error) {
     console.error("Validation error details:", error.errors);
     res.status(400).json({ message: "Validation Error", error: error.errors });
