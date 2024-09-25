@@ -7,7 +7,17 @@ const studentSchema = new mongoose.Schema({
   role: {
     type: String,
     default: 'student',  // Default role for admins/coordinators
-  },
+  }, resumes: [
+    {
+      type: String, // Base64 encoded PDF
+      validate: {
+        validator: function(v) {
+          return v && v.startsWith('data:application/pdf;base64,');
+        },
+        message: 'Invalid resume format, must be a PDF.'
+      }
+    }
+  ],
   // New personal details
   bloodGroup: { type: String },
   class10Percentage: { type: Number },

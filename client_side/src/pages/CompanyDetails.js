@@ -1,20 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Modal from 'react-modal';
-import companyData from '../data/companies.json'; // Import JSON data
 
 // Bind modal to app element
 Modal.setAppElement('#root');
 
 const CompanyDetails = () => {
   const { id } = useParams(); // Get the company ID from the URL
-  const company = companyData.find(company => company.id === id); // Find the company details
+  const [company, setCompany] = useState(null); // State to store company details
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Error state
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [resume, setResume] = useState(null);
 
-  if (!company) {
-    return <div className="p-6 text-white">Company not found</div>;
-  }
+  useEffect(() => {
+    const fetchCompanyDetails = async () => {
+      try {
+        const token = localStorage.getItem('token'); // Retrieve the token
+        const response = await fetch(`http://localhost:3000/api/v1/company/${id}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setCompany(data); // Set the fetched company data
+          setLoading(false);
+        } else {
+          setError('Failed to fetch company details');
+          setLoading(false);
+        }
+      } catch (error) {
+        setError('Error fetching company details');
+        setLoading(false);
+      }
+    };
+
+    fetchCompanyDetails();
+  }, [id]);
 
   const handleApplyClick = () => {
     setModalIsOpen(true);
@@ -41,6 +67,18 @@ const CompanyDetails = () => {
     }
   };
 
+  if (loading) {
+    return <div className="p-6 text-white">Loading company details...</div>;
+  }
+
+  if (error) {
+    return <div className="p-6 text-white">{error}</div>;
+  }
+
+  if (!company) {
+    return <div className="p-6 text-white">Company not found</div>;
+  }
+
   return (
     <div className='p-6 bg-[#222222] flex-1 overflow-auto'>
       <div className='max-w-4xl mx-auto bg-[#373737] p-6 rounded-lg shadow-md text-white'>
@@ -62,19 +100,18 @@ const CompanyDetails = () => {
           <p><strong>Location:</strong> {company.location}</p>
           <p><strong>Job Role:</strong> {company.jobRole}</p>
           <p><strong>Place of Posting:</strong> {company.placeOfPosting}</p>
-          <p><strong>Remote:</strong> {company.remote}</p>
+          <p><strong>Remote:</strong> {company.isRemote ? 'Yes' : 'No'}</p>
           <p><strong>Batch:</strong> {company.batch}</p>
-          <p><strong>CTC/Stipend:</strong> {company.ctcStipend}</p>
-          <p><strong>CTC/Stipend Info:</strong> {company.ctcStipendInfo}</p>
+          <p><strong>CTC:</strong> {company.ctc}</p>
           <p><strong>CGPA:</strong> {company.cgpa}</p>
           <p><strong>Category:</strong> {company.category}</p>
           <p><strong>Backlogs:</strong> {company.backlogs}</p>
-          <p><strong>Allowed Branches:</strong> {company.allowedBranches}</p>
+          <p><strong>Allowed Branches:</strong> {company.allowedBranches.join(', ')}</p>
           <p><strong>Registration Last Date:</strong> {new Date(company.registrationLastDate).toDateString()}</p>
           <p><strong>Coordinators:</strong></p>
           <ul>
             {company.coordinators.map((coord, index) => (
-              <li key={index}>{coord.name} - {coord.contact}</li>
+              <li key={index}>{coord.name}</li>
             ))}
           </ul>
           <p><strong>Job Description:</strong> {company.jobDescription}</p>

@@ -21,6 +21,10 @@ async function connectDB() {
   }
 }
 
+app.get("/", (req, res) => {
+  res.send("Hello world");
+});
+
 app.use("/api/v1", rootRouter); // Root router
 
 // Start server
