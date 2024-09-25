@@ -21,7 +21,7 @@ const Schedule = () => {
         const token = localStorage.getItem('token'); // Retrieve the token
         // API call to create a new event
         const response = await axios.post(
-          'http://localhost:3000/api/v1/notices/create',
+          `${process.env.REACT_APP_API_URL}/api/v1/notices/create`,
           newEvent,
           {
             headers: {
