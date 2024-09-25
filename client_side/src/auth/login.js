@@ -2,22 +2,24 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Login = ({ onLogin }) => { // Accept onLogin as a prop
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     role: 'student', // Default role is 'student'
   });
   const navigate = useNavigate();
-
+  const [error, setError] = useState('');
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
     try {
       // Send the login data in the specified format
-      const response = await fetch('http://localhost:3000/api/v1/auth/login', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,7 +33,7 @@ const Login = ({ onLogin }) => { // Accept onLogin as a prop
   
       if (response.ok) {
         const data = await response.json();
-        const { role, token,_id } = data; // Destructure role and token from response
+        const { role, token, _id } = data; // Destructure role and token from response
   
         // Store the role and token in localStorage
         localStorage.setItem('role', role);
@@ -42,8 +44,6 @@ const Login = ({ onLogin }) => { // Accept onLogin as a prop
         onLogin(); // Update the authentication state in App component
   
         // Redirect based on the role received from API
-    
-
         if (role === 'admin') {
           navigate('/dashboard'); // Redirect to Admin Dashboard
         } else {
@@ -52,18 +52,28 @@ const Login = ({ onLogin }) => { // Accept onLogin as a prop
       } else {
         const errorData = await response.json();
         console.error('Login failed:', errorData.message);
+        setError(errorData.message);
       }
     } catch (error) {
       console.error('An error occurred:', error);
+      setError(error.toString()); 
     }
   };
-  
+
+  const handleSignupRedirect = () => {
+    navigate('/signup'); // Redirect to the signup page
+  };
 
   return (
     <div className='h-screen flex items-center justify-center bg-gray-900'>
       <div className='w-full max-w-md p-8 bg-gray-800 rounded-lg shadow-lg'>
         <h2 className='text-3xl text-white mb-6 text-center'>Login</h2>
         <p className='text-white text-center'>Enter the values from the placeholder, valid for both student and admin</p>
+
+         {/* Display error message if exists */}
+
+         {error && <p className="text-red-500 text-center mb-1">{error}</p>}
+
         <form onSubmit={handleSubmit}>
           {/* Email */}
           <div className='mb-4'>
@@ -113,6 +123,15 @@ const Login = ({ onLogin }) => { // Accept onLogin as a prop
             className='w-full p-2 mt-4 bg-green-500 text-white rounded-lg hover:bg-green-600'
           >
             Login
+          </button>
+
+          {/* Sign Up Button */}
+          <button
+            type='button'
+            onClick={handleSignupRedirect}
+            className='w-full p-2 mt-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600'
+          >
+            Sign Up
           </button>
         </form>
       </div>

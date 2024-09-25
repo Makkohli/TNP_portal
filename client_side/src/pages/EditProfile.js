@@ -51,7 +51,7 @@ const EditProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3000/api/v1/editProf/edit-profile/${studentId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/editProf/edit-profile/${studentId}`, {
         method: 'PUT', // Change to 'POST' if your API requires it
         headers: {
           'Content-Type': 'application/json',
