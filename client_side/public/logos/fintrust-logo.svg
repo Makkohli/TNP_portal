@@ -1,0 +1,5 @@
+<!-- fintrust-logo.svg -->
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="#008000" rx="20" ry="20"/>
+  <text x="100" y="130" dominant-baseline="middle" text-anchor="middle" font-size="100" fill="#FFFFFF" font-family="Arial, sans-serif">$</text>
+</svg>

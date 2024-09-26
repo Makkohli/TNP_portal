@@ -1,0 +1,7 @@
+<!-- edulearn-logo.svg -->
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="#FFD700" rx="20" ry="20"/>
+  <polygon points="100,50 140,90 100,130 60,90" fill="#FFFFFF"/>
+  <line x1="100" y1="130" x2="100" y2="150" stroke="#FFFFFF" stroke-width="5"/>
+  <circle cx="100" cy="150" r="5" fill="#FFFFFF"/>
+</svg>
