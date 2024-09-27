@@ -1,0 +1,7 @@
+<!-- autodrive-logo.svg -->
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="#00008B" rx="20" ry="20"/>
+  <rect x="60" y="100" width="80" height="40" fill="#FFFFFF"/>
+  <circle cx="80" cy="150" r="10" fill="#FFFFFF"/>
+  <circle cx="120" cy="150" r="10" fill="#FFFFFF"/>
+</svg>

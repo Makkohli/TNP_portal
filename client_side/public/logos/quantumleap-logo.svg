@@ -1,0 +1,8 @@
+<!-- quantumleap-logo.svg -->
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="#FF1493" rx="20" ry="20"/>
+  <circle cx="100" cy="100" r="30" stroke="#FFFFFF" stroke-width="5" fill="none"/>
+  <line x1="100" y1="70" x2="100" y2="130" stroke="#FFFFFF" stroke-width="5"/>
+  <line x1="70" y1="100" x2="130" y2="100" stroke="#FFFFFF" stroke-width="5"/>
+  <circle cx="100" cy="100" r="5" fill="#FFFFFF"/>
+</svg>

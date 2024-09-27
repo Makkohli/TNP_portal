@@ -2,47 +2,46 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const EditProfile = () => {
-  const [profile, setProfile] = useState({
-    name: 'John Doe',
-    bloodGroup: 'A',
-    class10Percent: 85.0,
-    class12Percent: 78.5,
-    dateOfBirth: '2000-05-15',
-    gender: 'Male',
-    batch: '2024',
-    degree: 'BTech',
-    graduationGPA: 8.0,
-    category: 'General',
-    collegeEmail: 'john.doe@college.edu',
-    personalEmail: 'john.doe@example.com',
-    rollNumber: '2021XYZ123',
-    branch: 'CSE',
-    contactNumber: '12345 67890',
-    altContactNumber: '09876 54321',
-    currentAddress: '123 Main St, Hometown, Country',
-    permanentAddress: '456 Elm St, Hometown, Country',
-    aadhaar: '1234 5678 9101',
-    panCard: 'ABCDE1234F',
-    resume: 'resume2.pdf',
-    sem1GPA: 6.5,
-    sem2GPA: 7.0,
-    sem3GPA: 7.5,
-    sem4GPA: 7.8,
-    sem5GPA: 8.0,
-    sem6GPA: 8.2,
-    sem7GPA: 8.5,
-    sem8GPA: 8.7,
-    finalCGPA: 8.1,
-    cgpaBeforeDrop: 8.0,
-    graduationCGPA: '8.0',
-    backlogs: 0,
-    bans: 1,
-  });
-
   const navigate = useNavigate();
   const studentId = localStorage.getItem('userId'); // Student ID to be updated
   const token = localStorage.getItem('token'); // Retrieve the token
-  
+
+  const [profile, setProfile] = useState({
+    name: localStorage.getItem('name') || 'John Doe',
+    bloodGroup: localStorage.getItem('bloodGroup') || 'A',
+    class10Percent: parseFloat(localStorage.getItem('class10Percent')) || 85.0,
+    class12Percent: parseFloat(localStorage.getItem('class12Percent')) || 78.5,
+    dateOfBirth: localStorage.getItem('dateOfBirth') || '2000-05-15',
+    gender: localStorage.getItem('gender') || 'Male',
+    batch: localStorage.getItem('batch') || '2024',
+    degree: localStorage.getItem('degree') || 'BTech',
+    graduationGPA: parseFloat(localStorage.getItem('graduationGPA')) || 8.0,
+    category: localStorage.getItem('category') || 'General',
+    collegeEmail: localStorage.getItem('collegeEmail') || 'john.doe@college.edu',
+    personalEmail: localStorage.getItem('personalEmail') || 'john.doe@example.com',
+    rollNumber: localStorage.getItem('rollNumber') || '2021XYZ123',
+    branch: localStorage.getItem('branch') || 'CSE',
+    contactNumber: localStorage.getItem('contactNumber') || '12345 67890',
+    altContactNumber: localStorage.getItem('altContactNumber') || '09876 54321',
+    currentAddress: localStorage.getItem('currentAddress') || '123 Main St, Hometown, Country',
+    permanentAddress: localStorage.getItem('permanentAddress') || '456 Elm St, Hometown, Country',
+    aadhaar: localStorage.getItem('aadhaar') || '1234 5678 9101',
+    panCard: localStorage.getItem('panCard') || 'ABCDE1234F',
+    sem1GPA: parseFloat(localStorage.getItem('sem1GPA')) || 6.5,
+    sem2GPA: parseFloat(localStorage.getItem('sem2GPA')) || 7.0,
+    sem3GPA: parseFloat(localStorage.getItem('sem3GPA')) || 7.5,
+    sem4GPA: parseFloat(localStorage.getItem('sem4GPA')) || 7.8,
+    sem5GPA: parseFloat(localStorage.getItem('sem5GPA')) || 8.0,
+    sem6GPA: parseFloat(localStorage.getItem('sem6GPA')) || 8.2,
+    sem7GPA: parseFloat(localStorage.getItem('sem7GPA')) || 8.5,
+    sem8GPA: parseFloat(localStorage.getItem('sem8GPA')) || 8.7,
+    finalCGPA: parseFloat(localStorage.getItem('finalCGPA')) || 8.1,
+    cgpaBeforeDrop: parseFloat(localStorage.getItem('cgpaBeforeDrop')) || 8.0,
+    graduationCGPA: localStorage.getItem('graduationCGPA') || '8.0',
+    backlogs: parseInt(localStorage.getItem('backlogs')) || 0,
+    bans: parseInt(localStorage.getItem('bans')) || 1,
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProfile({ ...profile, [name]: value });
@@ -143,7 +142,7 @@ const EditProfile = () => {
           <input type='text' name='contactNumber' value={profile.contactNumber} onChange={handleChange} className='w-full p-2 rounded-lg bg-gray-800 text-white' />
         </div>
         <div>
-          <label className='block text-white'>Alternate Contact Number</label>
+          <label className='block text-white'>Alternative Contact Number</label>
           <input type='text' name='altContactNumber' value={profile.altContactNumber} onChange={handleChange} className='w-full p-2 rounded-lg bg-gray-800 text-white' />
         </div>
         <div>
@@ -161,10 +160,6 @@ const EditProfile = () => {
         <div>
           <label className='block text-white'>PAN Card</label>
           <input type='text' name='panCard' value={profile.panCard} onChange={handleChange} className='w-full p-2 rounded-lg bg-gray-800 text-white' />
-        </div>
-        <div>
-          <label className='block text-white'>Resume</label>
-          <input type='text' name='resume' value={profile.resume} onChange={handleChange} className='w-full p-2 rounded-lg bg-gray-800 text-white' />
         </div>
         <div>
           <label className='block text-white'>Sem 1 GPA</label>
@@ -218,11 +213,7 @@ const EditProfile = () => {
           <label className='block text-white'>Bans</label>
           <input type='number' name='bans' value={profile.bans} onChange={handleChange} className='w-full p-2 rounded-lg bg-gray-800 text-white' />
         </div>
-        
-        {/* Submit Button */}
-        <button type='submit' className='mt-4 bg-green-500 text-white p-2 rounded-lg hover:bg-green-600'>
-          Update Profile
-        </button>
+        <button type='submit' className='mt-4 p-2 bg-blue-600 text-white rounded-lg'>Save Changes</button>
       </form>
     </div>
   );
