@@ -1,0 +1,5 @@
+<!-- tech-corp-logo.svg -->
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="#1E90FF" rx="20" ry="20"/>
+  <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="80" fill="#FFFFFF" font-family="Arial, sans-serif">TC</text>
+</svg>

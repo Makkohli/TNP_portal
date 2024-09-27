@@ -1,0 +1,6 @@
+<!-- innovatex-logo.svg -->
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="#FF8C00" rx="20" ry="20"/>
+  <path d="M100 60 L130 100 H70 Z" fill="#FFFFFF"/>
+  <circle cx="100" cy="100" r="20" fill="#FFFFFF"/>
+</svg>

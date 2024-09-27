@@ -1,0 +1,6 @@
+<!-- cybersecure-logo.svg -->
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="#696969" rx="20" ry="20"/>
+  <polygon points="100,40 150,80 130,160 70,160 50,80" fill="#FFFFFF"/>
+  <circle cx="100" cy="110" r="10" fill="#696969"/>
+</svg>
