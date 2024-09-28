@@ -41,7 +41,7 @@ const Login = ({ onLogin }) => { // Accept onLogin as a prop
         localStorage.setItem('userId', _id);
   
         // Call onLogin to update authentication state
-        onLogin(); // Update the authentication state in App component
+        onLogin(role); // Update the authentication state in App component
   
         // Redirect based on the role received from API
         if (role === 'admin') {
