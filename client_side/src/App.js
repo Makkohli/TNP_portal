@@ -86,7 +86,7 @@ function App() {
                 {/* Protected Routes */}
                 <Route path="/dashboard" element={
                   isAuthenticated ? (
-                    role === 'admin' ? <Dashboard.Admin /> : <Dashboard.Student />
+                    role === 'admin' ? <Dashboard /> : <Students />
                   ) : (
                     <Navigate to="/login" />
                   )
