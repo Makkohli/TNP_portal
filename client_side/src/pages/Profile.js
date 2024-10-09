@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { PDFDocument } from 'pdf-lib';
 
 const Profile = () => {
   const [profile, setProfile] = useState({
@@ -84,56 +85,70 @@ const Profile = () => {
     setProfile(storedProfile);
   }, []);
 
-  const handleResumeUpload = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
   
-    if (profile.resumes.length >= 3) {
-      alert("You can only upload up to 3 resumes.");
-      return;
-    }
-  
-    const reader = new FileReader();
-    
-    reader.onloadend = async () => {
-      const base64String = reader.result.split(',')[1]; // Extract base64 string without prefix
-  
-      try {
-        const token = localStorage.getItem('token');
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/uploadcv/add-resume`, {
-          method: 'POST',
-          body: JSON.stringify({ resume: `data:application/pdf;base64,${base64String}`}),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `${token}`,
-          },
-        });
-        
-        const data = await response.json();
-  
-        if (response.ok) {
-          const newResumes = [...profile.resumes, base64String]; // Store base64 string
-          setProfile((prevProfile) => ({
-            ...prevProfile,
-            resumes: newResumes
-          }));
-          console.log("Successfully uploaded");
-          localStorage.setItem('resumes', JSON.stringify(newResumes)); // Update localStorage
-        } else {
-          alert(data.message || 'Failed to upload resume.');
-        }
-      } catch (error) {
-        console.error('Error uploading resume:', error);
+
+const handleResumeUpload = async (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  if (profile.resumes.length >= 3) {
+    alert("You can only upload up to 3 resumes.");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onloadend = async () => {
+    const arrayBuffer = reader.result;
+
+    try {
+      // Load the PDF and compress it
+      const pdfDoc = await PDFDocument.load(arrayBuffer);
+      const compressedPdfBytes = await pdfDoc.save({ useObjectStreams: false }); // Compress PDF
+      
+      // Convert compressed PDF to base64
+      const base64String = btoa(String.fromCharCode(...new Uint8Array(compressedPdfBytes)));
+      console.log("Compressed Base64 Size:", base64String.length);
+
+      const token = localStorage.getItem('token');
+
+      const response = await fetch("http://localhost:3000/api/v1/uploadcv/add-resume", {
+        method: 'POST',
+        body: JSON.stringify({ resume: `data:application/pdf;base64,${base64String}` }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const newResumes = [...profile.resumes, base64String]; // Store compressed base64 string
+        setProfile((prevProfile) => ({
+          ...prevProfile,
+          resumes: newResumes
+        }));
+        console.log("Successfully uploaded");
+        localStorage.setItem('resumes', JSON.stringify(newResumes)); // Update localStorage
+      } else {
+        alert(data.message || 'Failed to upload resume.');
       }
-    };
-  
-    reader.readAsDataURL(file); // Read file as data URL (base64)
+    } catch (error) {
+      console.error('Error uploading resume:', error);
+    }
   };
+
+  reader.readAsArrayBuffer(file); // Read file as array buffer for compression
+};
+
+  
+  
 
   const handleRemoveResume = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/v1/removecv/remove-resume`, {
+      const response = await fetch("http://localhost:3000/api/v1/removecv/remove-resume", {
         method: 'DELETE',
         headers: {
           'Authorization': `${token}`,
