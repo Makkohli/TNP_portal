@@ -23,6 +23,9 @@ const Sidebar = () => {
     { name: 'Profile', icon: Users, path: '/profile' },
     { name: 'Query', icon: Calendar, path: '/dashboard/query' },
     { name: 'Companies', icon: Briefcase, path: '/dashboard/companies' },
+    { name: 'Academic Calender', icon: Briefcase, path: '/dashboard/academics' },
+    { name: 'Resources', icon: Briefcase, path: '/dashboard/resources' },
+    { name: 'FAQs', icon: Briefcase, path: '/dashboard/faqs' },
   ];
 
   const MenuList = role === 'admin' ? adminMenu : studentMenu;

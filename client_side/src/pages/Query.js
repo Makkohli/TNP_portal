@@ -21,14 +21,14 @@ const Query = () => {
   };
 
   return (
-    <div className='p-6 bg-[#222222] flex-1 overflow-auto'>
-      <div className='max-w-4xl mx-auto bg-[#373737] p-6 rounded-lg shadow-md text-white'>
-        <h1 className='text-2xl font-bold mb-4'>Submit a Query</h1>
-        <div className='mb-4'>
-          <label className='block mb-2'>
-            <span className='text-white'>Select Company:</span>
+    <div className='p-6 min-h-screen flex-1 overflow-auto font-sans'>
+      <div className='max-w-4xl mx-auto bg-gradient-to-br from-gray-800 to-gray-700 p-6 rounded-lg shadow-lg text-white'>
+        <h1 className='text-3xl font-bold mb-6'>Submit a Query</h1>
+        <div className='mb-6'>
+          <label className='block mb-4'>
+            <span className='text-lg font-semibold'>Select Company:</span>
             <select
-              className='w-full p-2 mt-2 bg-[#222222] text-white rounded'
+              className='w-full p-3 mt-2 bg-[#222222] text-white rounded-lg border border-gray-600 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50'
               value={selectedCompany}
               onChange={handleCompanyChange}
             >
@@ -40,11 +40,11 @@ const Query = () => {
             </select>
           </label>
         </div>
-        <div className='mb-4'>
-          <label className='block mb-2'>
-            <span className='text-white'>Your Query:</span>
+        <div className='mb-6'>
+          <label className='block mb-4'>
+            <span className='text-lg font-semibold'>Your Query:</span>
             <textarea
-              className='w-full p-2 mt-2 bg-[#222222] text-white rounded'
+              className='w-full p-3 mt-2 bg-[#222222] text-white rounded-lg border border-gray-600 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50'
               rows='5'
               value={query}
               onChange={handleQueryChange}
@@ -52,10 +52,10 @@ const Query = () => {
           </label>
         </div>
         <button
-          className='bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600'
+          className='bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ease-in-out font-bold shadow-lg'
           onClick={handleSubmit}
         >
-          Submit Query here
+          Submit Query
         </button>
       </div>
     </div>

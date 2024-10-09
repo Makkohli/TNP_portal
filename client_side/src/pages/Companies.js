@@ -31,12 +31,12 @@ const Companies = () => {
   }, []);
 
   return (
-    <div className='p-6 bg-[#222222]'>
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
+    <div className='p-6 min-h-screen flex-1 font-sans'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
         {companyData.length > 0 ? (
           companyData.map((company) => (
-            <div key={company._id} className='bg-[#373737] p-4 rounded-lg shadow-md text-white'>
-              <h2 className='text-lg font-semibold mb-2'>{company.name}</h2>
+            <div key={company._id} className='bg-gradient-to-br from-gray-800 to-gray-700 p-6 rounded-lg shadow-lg text-white'>
+              <h2 className='text-xl font-bold mb-2'>{company.name}</h2>
               <p className='text-md mb-2'><strong>Job Profile:</strong> {company.jobRole}</p>
               <p className='text-md mb-2'><strong>Location:</strong> {company.placeOfPosting}</p>
               <p className='text-md mb-2'>
@@ -46,9 +46,11 @@ const Companies = () => {
                 </span>
               </p>
               <p className='text-md mb-2'>
-                <strong>Time:</strong> {new Date(company.updatedAt || company.createdAt).toLocaleString()}
+                <strong>Last Updated:</strong> {new Date(company.updatedAt || company.createdAt).toLocaleString()}
               </p>
-              <Link to={`/company/${company._id}`} className='text-blue-400 hover:underline'>View Details</Link>
+              <Link to={`/company/${company._id}`} className='text-blue-400 hover:underline'>
+                View Details
+              </Link>
             </div>
           ))
         ) : (
@@ -57,7 +59,7 @@ const Companies = () => {
       </div>
     </div>
   );
-}
+};
 
 // Helper function to determine badge classes based on status
 const getStatusClasses = (status) => {
