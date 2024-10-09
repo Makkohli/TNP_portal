@@ -15,6 +15,9 @@ import Signup from './auth/signup';
 import Login from './auth/login';
 import { NotificationsProvider } from './pages/NotificationsContext'; // Import NotificationsProvider
 import CreateCompany from './pages/CreateComp';
+import AcademicCalender from './pages/AcademicCalender';
+import FAQs from './pages/FAQs';
+import Resources from './pages/Resources';
 
 function App() {
   // Initialize authentication state
@@ -103,6 +106,15 @@ function App() {
                 } />
                 <Route path="/dashboard/comp" element={
                   isAuthenticated ? <CreateCompany /> : <Navigate to="/login" />
+                } />
+                 <Route path="/dashboard/academics" element={
+                  isAuthenticated ? <AcademicCalender /> : <Navigate to="/login" />
+                } />
+                <Route path="/dashboard/faqs" element={
+                  isAuthenticated ? <FAQs /> : <Navigate to="/login" />
+                } />
+                <Route path="/dashboard/resources" element={
+                  isAuthenticated ? <Resources /> : <Navigate to="/login" />
                 } />
                 <Route path="/company/:id" element={
                   isAuthenticated ? <CompanyDetails /> : <Navigate to="/login" />
