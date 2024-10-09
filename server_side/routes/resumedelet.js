@@ -5,7 +5,7 @@ import { authenticateToken } from '../middlewares/auth.js'; // Authentication mi
 const router = express.Router();
 
 // Remove Resume
-router.post('/remove-resume', authenticateToken, async (req, res) => {
+router.delete('/remove-resume', authenticateToken, async (req, res) => {
   const { index } = req.body; // Index of the resume to be removed
 
   try {

@@ -1,10 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Pie, Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, BarElement, CategoryScale, LinearScale } from 'chart.js';
+import { motion } from 'framer-motion';
+import { useSpring, animated } from '@react-spring/web';
+
+import CountUp from 'react-countup';
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement, BarElement, CategoryScale, LinearScale);
 
 function Dashboard() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  const fadeIn = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.5 } }
+  };
+
+  const slideIn = {
+    hidden: { x: -50, opacity: 0 },
+    visible: { x: 0, opacity: 1, transition: { duration: 0.5 } }
+  };
+
   const today = new Date();
   const options = { weekday: 'long', month: 'long', day: 'numeric' };
   const dateString = today.toLocaleDateString('en-US', options);
@@ -25,9 +45,9 @@ function Dashboard() {
     datasets: [
       {
         data: [placedPercentage, unplacedPercentage],
-        backgroundColor: ['#4caf50', '#f44336'],
+        backgroundColor: ['#6366f1', '#f43f5e'],
         borderColor: ['#ffffff', '#ffffff'],
-        borderWidth: 1,
+        borderWidth: 2,
       },
     ],
   };
@@ -36,9 +56,21 @@ function Dashboard() {
     responsive: true,
     plugins: {
       legend: {
-        display: false,
+        display: true,
+        position: 'bottom',
+        labels: {
+          color: '#e2e8f0',
+          font: {
+            size: 12,
+            family: "'Inter', sans-serif",
+          },
+        },
       },
     },
+    animation: {
+      animateScale: true,
+      animateRotate: true
+    }
   };
 
   // Data for the bar chart with gradient bars
@@ -55,14 +87,14 @@ function Dashboard() {
           const canvas = context.chart.canvas;
           const ctx = canvas.getContext('2d');
           const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-          gradient.addColorStop(0, '#4a90e2'); // Start color
-          gradient.addColorStop(1, '#007bff'); // End color
+          gradient.addColorStop(0, '#6366f1');
+          gradient.addColorStop(1, '#818cf8');
           return gradient;
         },
-        borderColor: 'rgba(0,0,0,0)', // No border
-        borderWidth: 0,
-        borderRadius: 4,
-        barThickness: 30,
+        borderColor: 'rgba(255,255,255,0.3)',
+        borderWidth: 1,
+        borderRadius: 8,
+        barThickness: 20,
       },
     ],
   };
@@ -73,11 +105,31 @@ function Dashboard() {
       legend: {
         display: false,
       },
+      tooltip: {
+        backgroundColor: '#1e293b',
+        titleColor: '#e2e8f0',
+        bodyColor: '#e2e8f0',
+        borderColor: '#475569',
+        borderWidth: 1,
+        cornerRadius: 8,
+        titleFont: {
+          size: 14,
+          family: "'Inter', sans-serif",
+          weight: 'bold',
+        },
+        bodyFont: {
+          size: 12,
+          family: "'Inter', sans-serif",
+        },
+      },
     },
     scales: {
       x: {
         ticks: {
-          color: 'white',
+          color: '#e2e8f0',
+          font: {
+            family: "'Inter', sans-serif",
+          },
         },
         grid: {
           display: false,
@@ -85,102 +137,153 @@ function Dashboard() {
       },
       y: {
         ticks: {
-          color: 'white',
+          color: '#e2e8f0',
+          font: {
+            family: "'Inter', sans-serif",
+          },
         },
         grid: {
-          color: '#444444',
+          color: 'rgba(226, 232, 240, 0.1)',
         },
       },
     },
+    animation: {
+      duration: 2000,
+      easing: 'easeOutBounce'
+    }
   };
 
+  const AnimatedPie = animated(Pie);
+  const AnimatedBar = animated(Bar);
+
+  const pieAnimation = useSpring({
+    from: { opacity: 0, transform: 'scale(0.8)' },
+    to: { opacity: 1, transform: 'scale(1)' },
+    config: { duration: 1000 },
+  });
+
+  const barAnimation = useSpring({
+    from: { opacity: 0, transform: 'translateY(50px)' },
+    to: { opacity: 1, transform: 'translateY(0px)' },
+    config: { duration: 1000 },
+  });
+
   return (
-    <div className='p-6 bg-[#222222]'>
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'>
+    <div className='p-6  min-h-screen font-sans'>
+      <h1 className="text-3xl font-bold text-white mb-6">Placement Dashboard</h1>
+      <motion.div
+        className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'
+        initial="hidden"
+        animate={isLoaded ? "visible" : "hidden"}
+        variants={{
+          visible: { transition: { staggerChildren: 0.1 } }
+        }}
+      >
         {/* Total Students Card */}
-        <div className='bg-[#373737] p-4 rounded-lg shadow-md text-white'>
-          <h2 className='text-lg font-semibold'>Total Students</h2>
-          <p className='text-2xl font-bold text-blue-400'>50</p>
-        </div>
+        <motion.div variants={fadeIn} className='bg-gradient-to-br from-blue-600 to-blue-700 p-6 rounded-xl shadow-lg text-white'>
+          <h2 className='text-lg font-semibold mb-2'>Total Students</h2>
+          <CountUp end={50} duration={2} className='text-4xl font-bold' />
+        </motion.div>
         
         {/* Placed Students Card */}
-        <div className='bg-[#373737] p-4 rounded-lg shadow-md text-white'>
-          <h2 className='text-lg font-semibold'>Placed Students</h2>
-          <p className='text-2xl font-bold text-red-400'>21</p>
-        </div>
+        <motion.div variants={fadeIn} className='bg-gradient-to-br from-green-600 to-green-700 p-6 rounded-xl shadow-lg text-white'>
+          <h2 className='text-lg font-semibold mb-2'>Placed Students</h2>
+          <CountUp end={21} duration={2} className='text-4xl font-bold' />
+        </motion.div>
         
         {/* Time Left Card */}
-        <div className='bg-[#373737] p-4 rounded-lg shadow-md text-white'>
-          <h2 className='text-lg font-semibold'>Time Left</h2>
-          <p className='text-2xl font-bold text-yellow-400'>16 Days</p>
-        </div>
+        <motion.div variants={fadeIn} className='bg-gradient-to-br from-yellow-600 to-yellow-700 p-6 rounded-xl shadow-lg text-white'>
+          <h2 className='text-lg font-semibold mb-2'>Time Left</h2>
+          <CountUp end={16} duration={2} className='text-4xl font-bold' suffix=' Days' />
+        </motion.div>
         
         {/* Upcoming Events Card */}
-        <div className='lg:col-span-2 bg-[#373737] p-4 rounded-lg shadow-md text-white flex flex-col gap-4'>
-          <h2 className='text-lg font-semibold'>Upcoming Events</h2>
-          <p className='text-xl font-bold mb-4'>{`Today, ${dateString}`}</p>
-          <div className='flex flex-col gap-2'>
-            <div className='bg-[#222222] border border-yellow-400 p-2 rounded-md text-sm'>
-              <p className='text-white'>Google Drive - 10am to 12pm</p>
-            </div>
-            <div className='bg-[#222222] border border-yellow-400 p-2 rounded-md text-sm'>
-              <p className='text-white'>Project Meeting - 2pm to 3pm</p>
-            </div>
-            <div className='bg-[#222222] border border-yellow-400 p-2 rounded-md text-sm'>
-              <p className='text-white'>Code Review - 4pm to 5pm</p>
-            </div>
+        <motion.div variants={slideIn} className='lg:col-span-1 bg-gradient-to-br from-purple-600 to-purple-700 p-6 rounded-xl shadow-lg text-white'>
+          <h2 className='text-lg font-semibold mb-4'>Upcoming Events</h2>
+          <p className='text-sm font-medium mb-4'>{`Today, ${dateString}`}</p>
+          <div className='space-y-3'>
+            {['Google Drive - 10am to 12pm', 'Project Meeting - 2pm to 3pm', 'Code Review - 4pm to 5pm'].map((event, index) => (
+              <motion.div
+                key={index}
+                className='bg-purple-800 bg-opacity-50 p-3 rounded-lg text-sm'
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.2 }}
+              >
+                <p className='text-white'>{event}</p>
+              </motion.div>
+            ))}
           </div>
-        </div>
-        
+        </motion.div>
+      </motion.div>
+
+      {/* Recent Placements and Charts Section */}
+      <motion.div
+        className='mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6'
+        initial="hidden"
+        animate={isLoaded ? "visible" : "hidden"}
+        variants={{
+          visible: { transition: { staggerChildren: 0.1 } }
+        }}
+      >
         {/* Recent Placements Card */}
-        <div className='lg:col-span-2 bg-[#373737] p-4 rounded-lg shadow-md text-white'>
-          <h2 className='text-lg font-semibold mb-4'>
-            <span className='text-yellow-400 font-bold text-sm'>RECENT PLACEMENTS</span>
-          </h2>
+        <motion.div variants={slideIn} className='bg-gradient-to-br from-gray-800 to-gray-700 p-6 rounded-xl shadow-lg text-white'>
+          <h2 className='text-xl font-semibold mb-4'>Recent Placements</h2>
           <div className='overflow-x-auto'>
             <table className='w-full'>
               <thead>
-                <tr className='text-left'>
-                  <th className='pb-2 pr-4 font-bold'>Name</th>
-                  <th className='pb-2 pr-4 font-bold'>Department</th>
-                  <th className='pb-2 pr-4 font-bold'>Company</th>
-                  <th className='pb-2 font-bold'>Contact</th>
+                <tr className='text-left border-b border-gray-600'>
+                  <th className='pb-3 pr-4 font-semibold'>Name</th>
+                  <th className='pb-3 pr-4 font-semibold'>Department</th>
+                  <th className='pb-3 pr-4 font-semibold'>Company</th>
+                  <th className='pb-3 font-semibold'>Contact</th>
                 </tr>
               </thead>
               <tbody>
                 {recentPlacements.map((placement, index) => (
-                  <tr key={index} className='border-t border-gray-700'>
-                    <td className='py-2 pr-4'>{placement.name}</td>
-                    <td className='py-2 pr-4'>{placement.department}</td>
-                    <td className='py-2 pr-4'>{placement.company}</td>
-                    <td className='py-2'>{placement.contact}</td>
-                  </tr>
+                  <motion.tr
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className='border-b border-gray-700 last:border-b-0'
+                  >
+                    <td className='py-3 pr-4'>{placement.name}</td>
+                    <td className='py-3 pr-4'>{placement.department}</td>
+                    <td className='py-3 pr-4'>{placement.company}</td>
+                    <td className='py-3'>{placement.contact}</td>
+                  </motion.tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </div>
-      </div>
+        </motion.div>
 
-      {/* Placement Percentage Card and Bar Chart */}
-      <div className='mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4'>
-        {/* Placement Percentage Card */}
-        <div className='bg-[#373737] p-4 rounded-lg shadow-md text-white flex flex-col items-center justify-center'>
-          <h2 className='text-lg font-semibold mb-4'>Placement Percentage</h2>
-          <div className='w-48 h-48'>
-            <Pie data={pieData} options={pieOptions} />
-          </div>
-          <p className='text-center text-xl mt-4'>{placedPercentage}%</p>
-        </div>
+        {/* Charts Section */}
+        <div className='space-y-6'>
+          {/* Placement Percentage Card */}
+          <motion.div variants={fadeIn} className='bg-gradient-to-br from-gray-800 to-gray-700 p-6 rounded-xl shadow-lg text-white'>
+            <h2 className='text-xl font-semibold mb-4'>Placement Percentage</h2>
+            <div className='flex items-center justify-center'>
+              <animated.div style={pieAnimation} className='w-64 h-64'>
+                <AnimatedPie data={pieData} options={pieOptions} />
+              </animated.div>
+            </div>
+            <div className='text-center mt-4'>
+              <CountUp end={placedPercentage} duration={2} className='text-3xl font-bold' suffix='%' />
+              <p className='text-gray-300'>of students placed</p>
+            </div>
+          </motion.div>
 
-        {/* Bar Chart Card */}
-        <div className='bg-[#373737] p-4 rounded-lg shadow-md text-white flex flex-col items-center'>
-          <h2 className='text-lg font-semibold mb-4'>Company-wise Placements</h2>
-          <div className='w-full h-60'>
-            <Bar data={barData} options={barOptions} />
-          </div>
+          {/* Company-wise Placements Card */}
+          <motion.div variants={fadeIn} className='bg-gradient-to-br from-gray-800 to-gray-700 p-6 rounded-xl shadow-lg text-white'>
+            <h2 className='text-xl font-semibold mb-4'>Company-wise Placements</h2>
+            <animated.div style={barAnimation} className='w-full h-64'>
+              <AnimatedBar data={barData} options={barOptions} />
+            </animated.div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
