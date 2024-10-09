@@ -8,16 +8,13 @@ const Sidebar = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Fetch the role from localStorage
     const userRole = localStorage.getItem('role');
     setRole(userRole);
   }, []);
 
   const adminMenu = [
-
     { name: 'Dashboard', icon: Home, path: '/dashboard' },
     { name: 'Schedule', icon: Calendar, path: '/dashboard/schedule' },
-    
   ];
 
   const studentMenu = [
@@ -29,24 +26,25 @@ const Sidebar = () => {
 
   const MenuList = role === 'admin' ? adminMenu : studentMenu;
 
-
   return (
-    <div className="fixed top-0 left-0 h-screen w-80 p-5 bg-[#373737] font-montserrat text-white">
+    <div className="fixed top-0 left-0 h-screen w-72 p-5 bg-gradient-to-b from-gray-900 to-gray-800 shadow-xl font-montserrat text-gray-200">
       <div className="text-center mb-6">
-        <h1 className="text-2xl font-bold">NSUT</h1>
-        <h2 className="text-sm font-bold">Dwarka, New Delhi</h2>
+        <h1 className="text-3xl font-bold text-blue-400">NSUT</h1>
+        <h2 className="text-sm font-medium text-gray-400">Dwarka, New Delhi</h2>
       </div>
-      <hr className="my-6 border border-white" />
-      <div className="mt-3">
+      <hr className="my-6 border border-gray-600" />
+      <div className="mt-4 space-y-3">
         {MenuList.map((menu, index) => (
           <Link to={menu.path} key={index}>
             <div
-              className={`flex gap-2 mb-2 p-3 hover:bg-[#4971FC] hover:text-white rounded-lg cursor-pointer items-center ${
-                location.pathname === menu.path ? 'bg-[#4971FC] text-white' : ''
+              className={`flex items-center gap-3 p-3 rounded-lg transition-all duration-300 cursor-pointer ${
+                location.pathname === menu.path
+                  ? 'bg-blue-600 text-white shadow-lg'
+                  : 'hover:bg-gray-700 hover:text-white'
               }`}
             >
               <menu.icon className="h-6 w-6" />
-              <h2 className="text-lg font-bold">{menu.name}</h2>
+              <h2 className="text-lg font-semibold">{menu.name}</h2>
             </div>
           </Link>
         ))}

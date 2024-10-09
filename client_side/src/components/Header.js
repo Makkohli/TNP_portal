@@ -38,7 +38,7 @@ function Header({ onLogout }) {
   }, []);
 
   return (
-    <div className='p-5 flex justify-between items-center bg-gray-800'>
+    <div className='p-5 flex justify-between items-center'>
       {/* Left Section: Search Bar and Notifications */}
       <div className='flex items-center gap-4 flex-grow'>
         {/* Search Bar */}

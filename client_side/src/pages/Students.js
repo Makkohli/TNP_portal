@@ -241,7 +241,7 @@ const Students = () => {
   };
 
   return (
-    <div className='p-4 md:p-6 bg-gray-900 min-h-screen text-white overflow-x-hidden'>
+    <div className='p-4 md:p-6  min-h-screen text-white overflow-x-hidden'>
       {/* Student Achievements & Badges */}
             <div className='bg-gray-800 p-6 rounded-lg shadow-md mb-6'>
         <h2 className='text-2xl font-semibold mb-4 flex items-center'>

@@ -1,25 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { motion, AnimatePresence } from 'framer-motion';
+import { CalendarPlus, Calendar } from 'lucide-react';
 
 const Schedule = () => {
-  const [events, setEvents] = useState([]); // State to store events
-  const [newEvent, setNewEvent] = useState({ title: '', description: '' }); // State for the form data
+  const [events, setEvents] = useState([]);
+  const [newEvent, setNewEvent] = useState({ title: '', description: '' });
 
-  // Handle input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewEvent({ ...newEvent, [name]: value });
   };
 
-  // Handle form submission
   const handleFormSubmit = async (e) => {
     e.preventDefault();
   
-    // Ensure both fields have values before submitting
     if (newEvent.title && newEvent.description) {
       try {
-        const token = localStorage.getItem('token'); // Retrieve the token
-        // API call to create a new event
+        const token = localStorage.getItem('token');
         const response = await axios.post(
           `${process.env.REACT_APP_API_URL}/api/v1/notices/create`,
           newEvent,
@@ -30,85 +28,116 @@ const Schedule = () => {
           }
         );
   
-        // Check the API response and log it
         console.log('API Response:', response.data);
   
-        // Extract the 'notice' from the response and add to the events array
-        const newNotice = response.data.notice;  // Extract only the 'notice' part
+        const newNotice = response.data.notice;
   
         setEvents((prevEvents) => {
-          // Update events array with the new event and limit to 3 events
           const updatedEvents = [newNotice, ...prevEvents].slice(0, 3);
-          console.log('Updated Events Array:', updatedEvents);  // Log the updated events array
+          console.log('Updated Events Array:', updatedEvents);
           return updatedEvents;
         });
   
-        // Reset the form fields
         setNewEvent({ title: '', description: '' });
       } catch (error) {
         console.error('Error creating new event:', error);
       }
     }
   };
-  
 
   return (
-    <div className="p-6 bg-[#222222] flex-1 overflow-auto text-white">
-      <div className="max-w-4xl mx-auto bg-[#373737] p-6 rounded-lg shadow-md">
-        <h1 className="text-2xl font-bold mb-4">Schedule</h1>
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="p-6  min-h-screen font-sans text-white"
+    >
+      <div className="max-w-4xl mx-auto bg-gradient-to-br from-gray-800 to-gray-700 p-8 rounded-xl shadow-lg">
+        <h1 className="text-3xl font-bold mb-6 flex items-center">
+          <Calendar className="mr-2" size={28} />
+          Schedule
+        </h1>
 
-        {/* Display upcoming events */}
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold mb-2">Upcoming Events</h2>
-          <ul>
+        <motion.div 
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="mb-8"
+        >
+          <h2 className="text-2xl font-semibold mb-4">Upcoming Events</h2>
+          <AnimatePresence>
             {events.length > 0 ? (
-              events.map((event, index) => (
-                <li key={index} className="mb-2">
-                  <strong>{event.title}</strong>: {event.description}
-                </li>
-              ))
+              <ul className="space-y-4">
+                {events.map((event, index) => (
+                  <motion.li
+                    key={index}
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: 20, opacity: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-gray-700 p-4 rounded-lg shadow"
+                  >
+                    <h3 className="text-lg font-semibold text-blue-300">{event.title}</h3>
+                    <p className="text-gray-300 mt-1">{event.description}</p>
+                  </motion.li>
+                ))}</ul>
             ) : (
-              <li>No upcoming events</li> // Display if no events are present
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-gray-400 italic"
+              >
+                No upcoming events
+              </motion.p>
             )}
-          </ul>
-        </div>
+          </AnimatePresence>
+        </motion.div>
 
-        {/* Add new event form */}
-        <div className="bg-[#484848] p-4 rounded-lg">
-          <h2 className="text-xl font-semibold mb-2">Add New Event</h2>
-          <form onSubmit={handleFormSubmit}>
-            <div className="mb-4">
+        <motion.div 
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="bg-gradient-to-br from-gray-700 to-gray-600 p-6 rounded-xl shadow-inner"
+        >
+          <h2 className="text-2xl font-semibold mb-4 flex items-center">
+            <CalendarPlus className="mr-2" size={24} />
+            Add New Event
+          </h2>
+          <form onSubmit={handleFormSubmit} className="space-y-4">
+            <div>
               <input
                 type="text"
                 name="title"
                 value={newEvent.title}
                 onChange={handleInputChange}
                 placeholder="Event Title"
-                className="p-2 w-full bg-gray-700 rounded-lg text-white"
+                className="p-3 w-full bg-gray-800 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
                 required
               />
             </div>
-            <div className="mb-4">
+            <div>
               <input
                 type="text"
                 name="description"
                 value={newEvent.description}
                 onChange={handleInputChange}
                 placeholder="Event Description"
-                className="p-2 w-full bg-gray-700 rounded-lg text-white"
+                className="p-3 w-full bg-gray-800 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
                 required
               />
             </div>
-            <button
+            <motion.button
               type="submit"
-              className="bg-blue-500 p-2 rounded-lg text-white hover:bg-blue-600"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-gradient-to-r from-blue-500 to-blue-600 p-3 rounded-lg text-white font-semibold hover:from-blue-600 hover:to-blue-700 transition duration-300 w-full"
             >
               Add Event
-            </button>
+            </motion.button>
           </form>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

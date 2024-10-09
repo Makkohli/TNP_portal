@@ -67,7 +67,7 @@ function App() {
     // Wrap the entire Router with NotificationsProvider
     <NotificationsProvider>
       <Router>
-        <div className="min-h-screen flex bg-[#222222]">
+        <div className="min-h-screen flex bg-gradient-to-br from-gray-900 to-gray-800">
           {/* Sidebar is visible only when authenticated */}
           {isAuthenticated && <Sidebar />}
           
