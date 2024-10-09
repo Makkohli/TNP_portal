@@ -15,6 +15,7 @@ const Sidebar = () => {
   const adminMenu = [
     { name: 'Dashboard', icon: Home, path: '/dashboard' },
     { name: 'Schedule', icon: Calendar, path: '/dashboard/schedule' },
+    {name:'Company', icon:Home, path:'/dashboard/comp'}
   ];
 
   const studentMenu = [

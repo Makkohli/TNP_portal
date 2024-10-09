@@ -14,6 +14,7 @@ import Query from './pages/Query';
 import Signup from './auth/signup';
 import Login from './auth/login';
 import { NotificationsProvider } from './pages/NotificationsContext'; // Import NotificationsProvider
+import CreateCompany from './pages/CreateComp';
 
 function App() {
   // Initialize authentication state
@@ -100,6 +101,9 @@ function App() {
                 <Route path="/dashboard/schedule" element={
                   isAuthenticated ? <Schedule /> : <Navigate to="/login" />
                 } />
+                <Route path="/dashboard/comp" element={
+                  isAuthenticated ? <CreateCompany /> : <Navigate to="/login" />
+                } />
                 <Route path="/company/:id" element={
                   isAuthenticated ? <CompanyDetails /> : <Navigate to="/login" />
                 } />
@@ -112,9 +116,10 @@ function App() {
                 <Route path="/dashboard/query" element={
                   isAuthenticated ? <Query /> : <Navigate to="/login" />
                 } />
-                
-                {/* Redirect Root Path */}
-                <Route path="/" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />} />
+                <Route path="/dashboard/query" element={
+                  isAuthenticated ? <Query /> : <Navigate to="/login" />
+                } />
+               
                 
                 {/* Catch-All Route for Undefined Paths */}
                 <Route path="*" element={<Navigate to="/" />} />
