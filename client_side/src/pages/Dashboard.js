@@ -169,7 +169,7 @@ function Dashboard() {
   });
 
   return (
-    <div className='p-6  min-h-screen font-sans'>
+    <div className='p-6 min-h-screen font-sans'>
       <h1 className="text-3xl font-bold text-white mb-6">Placement Dashboard</h1>
       <motion.div
         className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'

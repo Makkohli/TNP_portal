@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PDFDocument } from 'pdf-lib';
 import { motion } from 'framer-motion';
-import CountUp from 'react-countup';
 
 const Profile = () => {
   const [profile, setProfile] = useState({
@@ -103,6 +102,7 @@ const Profile = () => {
         const pdfDoc = await PDFDocument.load(arrayBuffer);
         const compressedPdfBytes = await pdfDoc.save({ useObjectStreams: false });
         const base64String = btoa(String.fromCharCode(...new Uint8Array(compressedPdfBytes)));
+        console.log("Compressed Base64 Size:", base64String.length);
 
         const token = localStorage.getItem('token');
 
@@ -123,6 +123,7 @@ const Profile = () => {
             ...prevProfile,
             resumes: newResumes
           }));
+          console.log("Successfully uploaded");
           localStorage.setItem('resumes', JSON.stringify(newResumes));
         } else {
           alert(data.message || 'Failed to upload resume.');
@@ -152,6 +153,7 @@ const Profile = () => {
           resumes: updatedResumes
         }));
         localStorage.setItem('resumes', JSON.stringify(updatedResumes));
+        console.log("Successfully removed the oldest resume");
       } else {
         alert('Failed to remove the resume.');
       }
@@ -171,14 +173,14 @@ const Profile = () => {
   };
 
   return (
-    <div className='p-6 bg-[#222222] min-h-screen flex-1 overflow-auto font-sans'>
+    <div className='p-6 min-h-screen flex-1 overflow-auto font-sans'>
       <motion.div
-        className='max-w-4xl mx-auto bg-[#373737] p-6 rounded-lg shadow-md text-white'
+        className='max-w-4xl mx-auto bg-gradient-to-br from-gray-800 to-gray-700 p-6 rounded-lg shadow-lg text-white'
         initial="hidden"
         animate="visible"
         variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
       >
-        <h1 className='text-3xl font-bold mb-6'>Profile</h1>
+        <motion.h1 className='text-3xl font-bold mb-6' variants={fadeIn}>Profile</motion.h1>
         <motion.div variants={fadeIn} className='mb-6'>
           <h2 className='text-xl font-semibold mb-4'>Basic Information</h2>
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>

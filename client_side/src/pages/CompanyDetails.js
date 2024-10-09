@@ -57,9 +57,7 @@ const CompanyDetails = () => {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     if (resume) {
-      // Handle the resume upload logic here
       console.log('Resume uploaded:', resume);
-      // Reset resume state
       setResume(null);
       handleCloseModal();
     } else {
@@ -80,12 +78,12 @@ const CompanyDetails = () => {
   }
 
   return (
-    <div className='p-6 bg-[#222222] flex-1 overflow-auto'>
-      <div className='max-w-4xl mx-auto bg-[#373737] p-6 rounded-lg shadow-md text-white'>
-        <h1 className='text-2xl font-bold mb-4'>{company.name}</h1>
-        <p className='text-lg mb-2'><strong>Department:</strong> {company.department}</p>
-        <p className='text-lg mb-2'><strong>Status:</strong> {company.status}</p>
-        <div className='mb-4'>
+    <div className='p-6 flex-1 overflow-auto font-sans'>
+      <div className='max-w-4xl mx-auto bg-gradient-to-br from-gray-800 to-gray-700 p-6 rounded-lg shadow-lg text-white'>
+        <h1 className='text-3xl font-bold mb-6'>{company.name}</h1>
+        <p className='text-lg mb-4'><strong>Department:</strong> {company.department}</p>
+        <p className='text-lg mb-4'><strong>Status:</strong> {company.status}</p>
+        <div className='mb-6'>
           <strong>Apply:</strong>
           <button 
             onClick={handleApplyClick}
@@ -95,8 +93,8 @@ const CompanyDetails = () => {
           </button>
         </div>
 
-        <div className='bg-[#2a2a2a] p-4 rounded-md mb-6'>
-          <h2 className='text-xl font-semibold mb-2'>Job Details</h2>
+        <div className='bg-[#232227] p-6 rounded-lg mb-6'>
+          <h2 className='text-2xl font-semibold mb-4'>Job Details</h2>
           <p><strong>Location:</strong> {company.location}</p>
           <p><strong>Job Role:</strong> {company.jobRole}</p>
           <p><strong>Place of Posting:</strong> {company.placeOfPosting}</p>
@@ -123,8 +121,8 @@ const CompanyDetails = () => {
         isOpen={modalIsOpen}
         onRequestClose={handleCloseModal}
         contentLabel="Upload Resume"
-        className='bg-[#373737] p-6 rounded-lg shadow-md text-white'
-        overlayClassName='fixed inset-0 bg-black bg-opacity-50'
+        className='bg-[#373737] p-6 rounded-lg shadow-lg text-white'
+        overlayClassName='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center'
       >
         <h2 className='text-2xl font-bold mb-4'>Upload Your Resume</h2>
         <form onSubmit={handleFormSubmit}>
@@ -132,7 +130,7 @@ const CompanyDetails = () => {
             type="file"
             accept=".pdf,.doc,.docx"
             onChange={handleFileChange}
-            className='mb-4'
+            className='mb-4 text-white'
           />
           <button
             type="submit"
