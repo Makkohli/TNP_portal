@@ -11,6 +11,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({ origin: '*' }));
 
+app.options('*', cors());  // Handle preflight requests for all routes
+
+
 // MongoDB connection
 async function connectDB() {
   try {
@@ -20,6 +23,7 @@ async function connectDB() {
     console.error("DB connection error:", error);
   }
 }
+
 
 app.use("/api/v1", rootRouter); // Root router
 
