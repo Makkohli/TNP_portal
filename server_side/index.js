@@ -23,6 +23,7 @@ async function connectDB() {
 }
  
 
+
 app.get("/", (req, res) => {
   res.send("Hello world");
 });
