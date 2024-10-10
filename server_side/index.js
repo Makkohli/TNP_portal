@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(cors({
    origin: '*',  // Allow requests from all origins
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true, // Allow credentials (cookies, headers, etc.)
+
 }));
 
 // MongoDB connection
