@@ -134,8 +134,8 @@ function App() {
                
                 
                 {/* Catch-All Route for Undefined Paths */}
-                <Route path="*" element={<Navigate to="/" />} />
-              </Routes>
+               <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />} />
+</Routes>
             </main>
           </div>
         </div>
