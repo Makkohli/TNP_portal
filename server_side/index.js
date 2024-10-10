@@ -21,6 +21,7 @@ async function connectDB() {
     console.error("DB connection error:", error);
   }
 }
+ 
 
 
 app.get("/", (req, res) => {
