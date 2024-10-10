@@ -12,41 +12,40 @@ app.use(express.json());
 
 // Update CORS configuration to allow specific origins
 const allowedOrigins = [
-  'http://localhost:3001', // Your local environment
-  'https://tnp-portal-lake.vercel.app', // Your Vercel deployment
+    'https://tnp-portal-lake.vercel.app',  // Add your production frontend URL
+    'http://localhost:3001'  // Keep your local URL for development
 ];
 
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests from the specified origins
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, origin);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not ' +
+                        'allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
 }));
+
 app.options('*', cors());  // Handle preflight requests for all routes
 
 // MongoDB connection
 async function connectDB() {
-  try {
-    await mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true });
-    console.log("DB connected");
-  } catch (error) {
-    console.error("DB connection error:", error);
-  }
+    try {
+        await mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+        console.log("DB connected");
+    } catch (error) {
+        console.error("DB connection error:", error);
+    }
 }
-
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
 
 app.use("/api/v1", rootRouter); // Root router
 
 // Start server
 connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
 });
