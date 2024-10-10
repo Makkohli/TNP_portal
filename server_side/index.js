@@ -10,6 +10,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({ origin: '*' }));
+app.options('*', cors()); 
 
 // MongoDB connection
 async function connectDB() {
@@ -20,7 +21,7 @@ async function connectDB() {
     console.error("DB connection error:", error);
   }
 }
-app.options('*', cors());  
+ 
 
 app.get("/", (req, res) => {
   res.send("Hello world");
