@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 
 app.use(cors({
-  origin: ['http://localhost:3001', 'https://tnp-portal-backend.onrender.com/' ]  // Allow requests from this origin
+   origin: '*',  // Allow requests from all origins
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true, // Allow credentials (cookies, headers, etc.)
 }));
