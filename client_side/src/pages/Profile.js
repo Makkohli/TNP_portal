@@ -94,8 +94,27 @@ const Profile = () => {
         <h1 className='text-2xl font-bold mb-4'>Profile</h1>
 
         <div className='mb-4'>
-          <p><strong>Name:</strong> {profile.name || 'N/A'}</p>
+        <p><strong>Name:</strong> {profile.name || 'N/A'}</p>
           <p><strong>Email:</strong> {profile.email || 'N/A'}</p>
+          <p><strong>Blood Group:</strong> {profile.bloodGroup || 'N/A'}</p>
+          <p><strong>Class 10 Percentage:</strong> {profile.class10Percentage || 'N/A'}</p>
+          <p><strong>Class 12 Percentage:</strong> {profile.class12Percentage || 'N/A'}</p>
+          <p><strong>Date of Birth:</strong> {profile.dateOfBirth || 'N/A'}</p>
+          <p><strong>Gender:</strong> {profile.gender || 'N/A'}</p>
+          <p><strong>Batch:</strong> {profile.batch || 'N/A'}</p>
+          <p><strong>Degree:</strong> {profile.degree || 'N/A'}</p>
+          <p><strong>Graduation GPA:</strong> {profile.graduationGPA || 'N/A'}</p>
+          <p><strong>Category:</strong> {profile.category || 'N/A'}</p>
+          <p><strong>College Email:</strong> {profile.collegeEmail || 'N/A'}</p>
+          <p><strong>Personal Email:</strong> {profile.personalEmail || 'N/A'}</p>
+          <p><strong>Roll Number:</strong> {profile.rollNumber || 'N/A'}</p>
+          <p><strong>Branch:</strong> {profile.branch || 'N/A'}</p>
+          <p><strong>Contact Number:</strong> {profile.contactNumber || 'N/A'}</p>
+          <p><strong>Alternate Contact Number:</strong> {profile.alternateContactNumber || 'N/A'}</p>
+          <p><strong>Current Address:</strong> {profile.currentAddress || 'N/A'}</p>
+          <p><strong>Permanent Address:</strong> {profile.permanentAddress || 'N/A'}</p>
+          <p><strong>Aadhaar:</strong> {profile.aadhaar || 'N/A'}</p>
+          <p><strong>PAN Card:</strong> {profile.panCard || 'N/A'}</p>
           <h3 className='mt-6 mb-2 text-lg font-semibold'>Resumes:</h3>
           <div className='mb-4'>
             {profile.resumes.length > 0 ? (
