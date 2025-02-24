@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Home, Users, Briefcase, Calendar } from 'lucide-react';
+import { Home, Users, Briefcase, Calendar, BookOpen, HelpCircle, FileText } from 'lucide-react';
 import { useLocation, Link } from 'react-router-dom';
 import '@fontsource/montserrat';
 
@@ -15,17 +15,17 @@ const Sidebar = () => {
   const adminMenu = [
     { name: 'Dashboard', icon: Home, path: '/dashboard' },
     { name: 'Schedule', icon: Calendar, path: '/dashboard/schedule' },
-    {name:'Company', icon:Home, path:'/dashboard/comp'}
+    {name:'Company', icon: Briefcase, path:'/dashboard/comp'}
   ];
 
   const studentMenu = [
     { name: 'Dashboard', icon: Home, path: '/dashboard/students' },
     { name: 'Profile', icon: Users, path: '/profile' },
-    { name: 'Query', icon: Calendar, path: '/dashboard/query' },
     { name: 'Companies', icon: Briefcase, path: '/dashboard/companies' },
-    { name: 'Academic Calender', icon: Briefcase, path: '/dashboard/academics' },
-    { name: 'Resources', icon: Briefcase, path: '/dashboard/resources' },
-    { name: 'FAQs', icon: Briefcase, path: '/dashboard/faqs' },
+    { name: 'Academic Calender', icon: Calendar, path: '/dashboard/academics' },
+    { name: 'Resources', icon: BookOpen, path: '/dashboard/resources' },  // Replaced 'library' with 'BookOpen'
+    { name: 'Query', icon: HelpCircle, path: '/dashboard/query' },  // Replaced 'sticker' with 'HelpCircle'
+    { name: 'FAQs', icon: FileText, path: '/dashboard/faqs' }  // Replaced 'scroll' with 'FileText'
   ];
 
   const MenuList = role === 'admin' ? adminMenu : studentMenu;

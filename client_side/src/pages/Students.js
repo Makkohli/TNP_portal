@@ -508,7 +508,7 @@ const ToDoList = () => {
   return (
     <div className='bg-gray-700 p-4 rounded-lg shadow-md'>
       {/* Input for new task */}
-      <div className='flex mb-4'>
+      <div className='flex mb-4 text-gray-950'>
         <input
           type='text'
           placeholder='Add a new task...'

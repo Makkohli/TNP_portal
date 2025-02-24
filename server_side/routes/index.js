@@ -5,6 +5,7 @@ import editprofRouter from './editProf.js';
 import companyDetails from './companydetails.js';
 import removeCV from './resumedelet.js';
 import uploadCV from './resumeadd.js';
+import profile from './profile.js';
 
 const router = express.Router({ mergeParams: true });
 
@@ -19,6 +20,7 @@ router.use("/editProf",editprofRouter);
 router.use('/company', companyDetails);
 router.use('/uploadcv', uploadCV);
 router.use('/removecv', removeCV);
+router.use('/profile', profile);
 
 
 export default router;
