@@ -26,7 +26,48 @@ router.put('/edit-profile/:id', authenticateToken, async (req, res) => {
       return res.status(404).json({ message: 'Student not found' });
     }
 
-    return res.status(200).json({ message: 'Profile updated successfully', student: updatedStudent });
+    // Return updated student details
+    return res.status(200).json({
+      message: 'Profile updated successfully',
+      student: {
+        _id: updatedStudent._id,
+        name: updatedStudent.name,
+        email: updatedStudent.email,
+        bloodGroup: updatedStudent.bloodGroup,
+        class10Percentage: updatedStudent.class10Percentage,
+        class12Percentage: updatedStudent.class12Percentage,
+        dateOfBirth: updatedStudent.dateOfBirth,
+        gender: updatedStudent.gender,
+        batch: updatedStudent.batch,
+        degree: updatedStudent.degree,
+        graduationGPA: updatedStudent.graduationGPA,
+        category: updatedStudent.category,
+        collegeEmail: updatedStudent.collegeEmail,
+        personalEmail: updatedStudent.personalEmail,
+        rollNumber: updatedStudent.rollNumber,
+        branch: updatedStudent.branch,
+        contactNumber: updatedStudent.contactNumber,
+        alternateContactNumber: updatedStudent.alternateContactNumber,
+        currentAddress: updatedStudent.currentAddress,
+        permanentAddress: updatedStudent.permanentAddress,
+        aadhaar: updatedStudent.aadhaar,
+        panCard: updatedStudent.panCard,
+        resumes: updatedStudent.resumes,
+        semester1GPA: updatedStudent.semester1GPA,
+        semester2GPA: updatedStudent.semester2GPA,
+        semester3GPA: updatedStudent.semester3GPA,
+        semester4GPA: updatedStudent.semester4GPA,
+        semester5GPA: updatedStudent.semester5GPA,
+        semester6GPA: updatedStudent.semester6GPA,
+        semester7GPA: updatedStudent.semester7GPA,
+        semester8GPA: updatedStudent.semester8GPA,
+        finalCGPA: updatedStudent.finalCGPA,
+        cgpaBeforeDrop: updatedStudent.cgpaBeforeDrop,
+        graduationCGPA: updatedStudent.graduationCGPA,
+        backlogs: updatedStudent.backlogs,
+        bans: updatedStudent.bans,
+      }
+    });
   } catch (error) {
     return res.status(500).json({ message: 'Error updating profile', error });
   }
